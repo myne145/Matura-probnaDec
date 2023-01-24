@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Main {
 
@@ -66,22 +69,69 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("B:");
 //        for(Integer i : bTeamPassas)
-//            System.out.println(i);
-//    } TODO: fix this shit and make it use java 1.8 api
+//
 
+    static ArrayList<Integer> sieveOfEratosthenes(int n)
+    {
+        // Create a boolean array "prime[0..n]" and initialize
+        // all entries it as true. A value in prime[i] will
+        // finally be false if i is Not a prime, else true.
+        boolean prime[] = new boolean[n+1];
+        for(int i=0;i<=n;i++)
+            prime[i] = true;
+
+        for(int p = 2; p*p <=n; p++)
+        {
+            // If prime[p] is not changed, then it is a prime
+            if(prime[p] == true)
+            {
+                // Update all multiples of p
+                for(int i = p*p; i <= n; i += p)
+                    prime[i] = false;
+            }
+        }
+
+        // Print all prime numbers
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i = 2; i <= n; i++)
+        {
+            if(prime[i] == true)
+                arr.add(i);
+        }
+        return arr;
+    }
 
     private static void zad3Part1() throws IOException {
-        File liczby = new File("liczby.txt");
-        ArrayList<Integer> arr = new ArrayList<>((ArrayList<Integer>)Files.readAllLines(liczby.toPath()));
-        StringBuilder builder = new StringBuilder();
-        for(Integer i : arr)
-            builder.append(i).append(" ");
+        File liczby = new File("liczby_przyklad.txt");
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(String s : Files.readAllLines(liczby.toPath())) {
+            arr.add(Integer.parseInt(s));
+        }
+
         //actual alorithm here
+        ArrayList<Integer> theSameCounters = new ArrayList<>();
+        ArrayList<Integer> notTheSameCounters = new ArrayList<>();
         for(Integer i : arr) {
             if(i % 2 == 0) {
 
+                ArrayList<Integer> primeNumbers = new ArrayList<>(sieveOfEratosthenes(i));
+                int counter = 0;
+                int counterTheSame = 0;
+                //System.out.println(primeNumbers);
+                for(int y = primeNumbers.size() - 1; y >= 0; y--) {
+                    int temp = i - primeNumbers.get(y);
+                    if(primeNumbers.contains(temp) && primeNumbers.indexOf(temp) <= y)
+                        counter++;
+                    if(primeNumbers.contains(temp))
+                        counterTheSame++;
+                    }
+                    theSameCounters.add(counterTheSame);
+                    notTheSameCounters.add(counter);
+                    //System.out.println("Counter NOT THE SAME for " + i + ": " + counter + ", Counter THE SAME: " + counterTheSame);
+
             }
-        }
+        } //TODO: liczba dla jakiej to jest
+        System.out.println(Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
     }
 
     public static void main(String[] args) throws IOException {
@@ -92,7 +142,7 @@ public class Main {
     Hipoteza Goldbacha głosi, że każda liczba parzysta większa od 2 jest sumą dwóch liczb
 pierwszych. Nie wiemy, czy ta hipoteza jest prawdziwa dla wszystkich liczb parzystych
 dodatnich, ale została potwierdzona dla wszystkich liczb „rozsądnej wielkości”,
-zwłaszcza dla nie przekraczających 1018. Oczywiście liczba może mieć więcej niż jeden
+zwłaszcza dla nie przekraczających 10^18. Oczywiście liczba może mieć więcej niż jeden
 rozkład na sumę dwóch liczb pierwszych, np. 22 = 19 + 3 = 17 + 5 = 11 + 11.
 Dla każdej z liczb z pliku liczby.txt rozstrzygnij, na ile różnych sposobów da się ją
 przedstawić jako sumę dwóch liczb pierwszych.
