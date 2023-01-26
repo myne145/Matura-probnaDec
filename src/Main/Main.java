@@ -3,10 +3,7 @@ package Main;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Main {
@@ -71,19 +68,14 @@ public class Main {
 //        for(Integer i : bTeamPassas)
 //
 
-    static ArrayList<Integer> sieveOfEratosthenes(int n)
-    {
-        // Create a boolean array "prime[0..n]" and initialize
-        // all entries it as true. A value in prime[i] will
-        // finally be false if i is Not a prime, else true.
-        boolean prime[] = new boolean[n+1];
+    private static ArrayList<Integer> sieveOfEratosthenes(int n) { //TODO replace copied code from the internet
+        boolean[] prime = new boolean[n+1];
         for(int i=0;i<=n;i++)
             prime[i] = true;
 
         for(int p = 2; p*p <=n; p++)
         {
-            // If prime[p] is not changed, then it is a prime
-            if(prime[p] == true)
+            if(prime[p])
             {
                 // Update all multiples of p
                 for(int i = p*p; i <= n; i += p)
@@ -101,8 +93,8 @@ public class Main {
         return arr;
     }
 
-    private static void zad3Part1() throws IOException {
-        File liczby = new File("liczby_przyklad.txt");
+    private static void zad3Part3() throws IOException {
+        File liczby = new File("liczby.txt");
         ArrayList<Integer> arr = new ArrayList<>();
         for(String s : Files.readAllLines(liczby.toPath())) {
             arr.add(Integer.parseInt(s));
@@ -111,6 +103,7 @@ public class Main {
         //actual alorithm here
         ArrayList<Integer> theSameCounters = new ArrayList<>();
         ArrayList<Integer> notTheSameCounters = new ArrayList<>();
+        ArrayList<Integer> numbers = new ArrayList<>();
         for(Integer i : arr) {
             if(i % 2 == 0) {
 
@@ -127,15 +120,18 @@ public class Main {
                     }
                     theSameCounters.add(counterTheSame);
                     notTheSameCounters.add(counter);
+                    numbers.add(i);
                     //System.out.println("Counter NOT THE SAME for " + i + ": " + counter + ", Counter THE SAME: " + counterTheSame);
 
             }
         } //TODO: liczba dla jakiej to jest
-        System.out.println(Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
+        int indexMax = notTheSameCounters.indexOf(Collections.max(notTheSameCounters));
+        int indexMin = notTheSameCounters.indexOf(Collections.min(notTheSameCounters));
+        System.out.println("Najwiecej rozkladow (nie te same, te same): " + numbers.get(indexMax) + ", " + Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + "najmniej rozkladow (nie te same, te same): "+ numbers.get(indexMin) + ", " + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
     }
 
     public static void main(String[] args) throws IOException {
-        zad3Part1();
+        zad3Part3();
     }
 
     /*
