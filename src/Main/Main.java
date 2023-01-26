@@ -8,65 +8,84 @@ import java.util.Collections;
 
 public class Main {
 
-//    private static void zad1_1() throws Exception{
-//        String content = Files.readString(Path.of("mecz.txt"));
-//        System.out.println(content.length());
-//        int counter = 0;
-//
-//        for(int i = 1; i < content.length(); i++) {
-//            if(content.charAt(i-1) != content.charAt(i)) {
-//                counter++;
-//            }
-//        }
-//        System.out.println(counter);
-//    }
-//
-//    private static void zad1_2() throws IOException {
-//        //String content = Files.readString(Path.of("mecz.txt"));
-//        int amountOfA = 0;
-//        int amountOfB = 0;
-//        for(int i = 0; i < content.length(); i++) {
-//            if(content.charAt(i) == 'A')
-//                amountOfA++;
-//            if(content.charAt(i) == 'B')
-//                amountOfB++;
-//            if((amountOfA >= 1000 || amountOfB >= 1000) && (Math.max(amountOfA, amountOfB) >= Math.min(amountOfA, amountOfB) + 3)) {
-//                System.out.println("A: " + amountOfA + ", " + "B: " + amountOfB);
-//                break;
-//            }
-//        }
-//    }
-//
-//    private static void zad1_3() throws IOException {
-//        String content = Files.readString(Path.of("mecz.txt"));
-//        int howLongIsTheASequence = 1;
-//        int howLongIsTheBSequence = 1;
-//        ArrayList<Integer> aTeamPassas = new ArrayList<>();
-//        ArrayList<Integer> bTeamPassas = new ArrayList<>();
-//        for(int i = 1; i < content.length(); i++) {
-//            if(content.charAt(i-1) == 'A' && content.charAt(i) == 'A') {
-//                howLongIsTheASequence++;
-//            } else {
-//                if(howLongIsTheASequence >= 10) {
-//                    aTeamPassas.add(howLongIsTheASequence);
-//                }
-//                howLongIsTheASequence = 1;
-//            }
-//            if(content.charAt(i-1) == 'B' && content.charAt(i) == 'B') {
-//                howLongIsTheBSequence++;
-//            } else {
-//                if(howLongIsTheBSequence >= 10) {
-//                    bTeamPassas.add(howLongIsTheBSequence);
-//                }
-//                howLongIsTheBSequence = 1;
-//            }
-//        }
-//        System.out.println("A:");
-//        for(Integer i : aTeamPassas)
-//            System.out.println(i);
-//        System.out.println("B:");
-//        for(Integer i : bTeamPassas)
-//
+    private static ArrayList<Integer> readFileArr(File f) throws IOException {
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(String s : Files.readAllLines(f.toPath())) {
+            arr.add(Integer.parseInt(s));
+        }
+        return arr;
+    }
+    private static String readFileString(File f) throws IOException {
+        ArrayList<Integer> arr = new ArrayList<>();
+        StringBuilder bobTheBuilder = new StringBuilder();
+        for(String s : Files.readAllLines(f.toPath())) {
+            //arr.add(Integer.parseInt(s));
+            bobTheBuilder.append(s);
+        }
+        return bobTheBuilder.toString();
+    }
+
+
+    private static void zad1_1() throws Exception{
+        String content = readFileString(new File("mecz.txt"));
+        System.out.println(content.length());
+        int counter = 0;
+
+        for(int i = 1; i < content.length(); i++) {
+            if(content.charAt(i-1) != content.charAt(i)) {
+                counter++;
+            }
+        }
+        System.out.println(counter);
+    }
+
+    private static void zad1_2() throws IOException {
+        String content = readFileString(new File("mecz.txt"));
+        int amountOfA = 0;
+        int amountOfB = 0;
+        for(int i = 0; i < content.length(); i++) {
+            if(content.charAt(i) == 'A')
+                amountOfA++;
+            if(content.charAt(i) == 'B')
+                amountOfB++;
+            if((amountOfA >= 1000 || amountOfB >= 1000) && (Math.max(amountOfA, amountOfB) >= Math.min(amountOfA, amountOfB) + 3)) {
+                System.out.println("A: " + amountOfA + ", " + "B: " + amountOfB);
+                break;
+            }
+        }
+    }
+
+    private static void zad1_3() throws IOException {
+        String content = readFileString(new File("mecz.txt"));
+        int howLongIsTheASequence = 1;
+        int howLongIsTheBSequence = 1;
+        ArrayList<Integer> aTeamPassas = new ArrayList<>();
+        ArrayList<Integer> bTeamPassas = new ArrayList<>();
+        for (int i = 1; i < content.length(); i++) {
+            if (content.charAt(i - 1) == 'A' && content.charAt(i) == 'A') {
+                howLongIsTheASequence++;
+            } else {
+                if (howLongIsTheASequence >= 10) {
+                    aTeamPassas.add(howLongIsTheASequence);
+                }
+                howLongIsTheASequence = 1;
+            }
+            if (content.charAt(i - 1) == 'B' && content.charAt(i) == 'B') {
+                howLongIsTheBSequence++;
+            } else {
+                if (howLongIsTheBSequence >= 10) {
+                    bTeamPassas.add(howLongIsTheBSequence);
+                }
+                howLongIsTheBSequence = 1;
+            }
+        }
+        System.out.println("A:");
+        for (Integer i : aTeamPassas)
+            System.out.println(i);
+        System.out.println("B:");
+        for (Integer i : bTeamPassas)
+            System.out.println(i);
+    }
 
     private static ArrayList<Integer> sieveOfEratosthenes(int n) { //TODO replace copied code from the internet
         boolean[] prime = new boolean[n+1];
@@ -94,13 +113,9 @@ public class Main {
     }
 
     private static void zad3Part3() throws IOException {
-        File liczby = new File("liczby.txt");
-        ArrayList<Integer> arr = new ArrayList<>();
-        for(String s : Files.readAllLines(liczby.toPath())) {
-            arr.add(Integer.parseInt(s));
-        }
-
+        File liczby = new File("liczby_przyklad.txt");
         //actual alorithm here
+        ArrayList<Integer> arr = readFileArr(liczby);
         ArrayList<Integer> theSameCounters = new ArrayList<>();
         ArrayList<Integer> notTheSameCounters = new ArrayList<>();
         ArrayList<Integer> numbers = new ArrayList<>();
@@ -133,6 +148,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         zad3Part3();
     }
+
+    /*
+
+     */
+
+
+
 
     /*
     Hipoteza Goldbacha głosi, że każda liczba parzysta większa od 2 jest sumą dwóch liczb
