@@ -2,28 +2,12 @@ package Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Main {
+import static Main.Algorithms.*;
 
-    private static ArrayList<Integer> readFileArr(File f) throws IOException {
-        ArrayList<Integer> arr = new ArrayList<>();
-        for(String s : Files.readAllLines(f.toPath())) {
-            arr.add(Integer.parseInt(s));
-        }
-        return arr;
-    }
-    private static String readFileString(File f) throws IOException {
-        ArrayList<Integer> arr = new ArrayList<>();
-        StringBuilder bobTheBuilder = new StringBuilder();
-        for(String s : Files.readAllLines(f.toPath())) {
-            //arr.add(Integer.parseInt(s));
-            bobTheBuilder.append(s);
-        }
-        return bobTheBuilder.toString();
-    }
+public class Main {
 
 
     private static void zad1_1() throws Exception{
@@ -55,6 +39,17 @@ public class Main {
         }
     }
 
+    /*
+    Powiemy, że drużyna ma dobrą passę, jeśli wygrywa rozgrywki co najmniej 10 razy z rzędu.
+    Każda dobra passa rozpoczyna się albo na początku meczu, albo bezpośrednio po
+    przegranej rozgrywce. Każda dobra passa kończy się albo z końcem meczu, albo
+    bezpośrednio przed przegraną rozgrywką.
+    Podaj łączną liczbę dobrych pass, które miały obie drużyny w meczu. Wyznacz długość
+    najdłuższej dobrej passy i drużynę, która ją osiągnęła. Tylko jedna drużyna miała dobrą
+    passę o tej długości.
+    Przykład: w meczu BBBBBBBBBBAABBAAAAAAAAAAABA mamy łącznie 2 dobre passy.
+    Najdłuższą dobrą passę, o długości 11, osiągnęła drużyna A
+     */
     private static void zad1_3() throws IOException {
         String content = readFileString(new File("mecz.txt"));
         int howLongIsTheASequence = 1;
@@ -87,31 +82,26 @@ public class Main {
             System.out.println(i);
     }
 
-    private static ArrayList<Integer> sieveOfEratosthenes(int n) { //TODO replace copied code from the internet
-        boolean[] prime = new boolean[n+1];
-        for(int i=0;i<=n;i++)
-            prime[i] = true;
 
-        for(int p = 2; p*p <=n; p++)
-        {
-            if(prime[p])
-            {
-                // Update all multiples of p
-                for(int i = p*p; i <= n; i += p)
-                    prime[i] = false;
-            }
-        }
 
-        // Print all prime numbers
-        ArrayList<Integer> arr = new ArrayList<>();
-        for(int i = 2; i <= n; i++)
-        {
-            if(prime[i])
-                arr.add(i);
-        }
-        return arr;
-    }
-
+    /*
+    Hipoteza Goldbacha głosi, że każda liczba parzysta większa od 2 jest sumą dwóch liczb
+    pierwszych. Nie wiemy, czy ta hipoteza jest prawdziwa dla wszystkich liczb parzystych
+    dodatnich, ale została potwierdzona dla wszystkich liczb „rozsądnej wielkości”,
+    zwłaszcza dla nie przekraczających 10^18. Oczywiście liczba może mieć więcej niż jeden
+    rozkład na sumę dwóch liczb pierwszych, np. 22 = 19 + 3 = 17 + 5 = 11 + 11.
+    Dla każdej z liczb z pliku liczby.txt rozstrzygnij, na ile różnych sposobów da się ją
+    przedstawić jako sumę dwóch liczb pierwszych.
+    Podaj:
+    • liczbę, która ma najwięcej różnych rozkładów na sumę dwóch liczb pierwszych, oraz
+    liczbę takich rozkładów
+    • liczbę, która ma najmniej różnych rozkładów na sumę dwóch liczb pierwszych, oraz liczbę
+    takich rozkładów.
+    Uwaga: przyjmujemy, że dwa rozkłady są różne, jeśli nie zawierają takiej samej pary
+    składników. Przykładowo: rozkłady 22 = 19 + 3 i 22 = 3 + 19 są takie same.
+    Dla pliku liczby_przyklad.txt odpowiedzią jest: 996 37 4 1
+    (liczba 996 ma 37 rozkładów, a 4 tylko jeden)
+    */
     private static void zad3Part3() throws IOException {
         File liczby = new File("liczby_przyklad.txt");
         //actual alorithm here
@@ -145,51 +135,9 @@ public class Main {
         System.out.println("Najwiecej rozkladow (nie te same, te same): " + numbers.get(indexMax) + ", " + Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + "najmniej rozkladow (nie te same, te same): "+ numbers.get(indexMin) + ", " + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
     }
 
+
+
     public static void main(String[] args) throws IOException {
         zad3Part3();
     }
-
-    /*
-
-     */
-
-
-
-
-    /*
-    Hipoteza Goldbacha głosi, że każda liczba parzysta większa od 2 jest sumą dwóch liczb
-pierwszych. Nie wiemy, czy ta hipoteza jest prawdziwa dla wszystkich liczb parzystych
-dodatnich, ale została potwierdzona dla wszystkich liczb „rozsądnej wielkości”,
-zwłaszcza dla nie przekraczających 10^18. Oczywiście liczba może mieć więcej niż jeden
-rozkład na sumę dwóch liczb pierwszych, np. 22 = 19 + 3 = 17 + 5 = 11 + 11.
-Dla każdej z liczb z pliku liczby.txt rozstrzygnij, na ile różnych sposobów da się ją
-przedstawić jako sumę dwóch liczb pierwszych.
-Podaj:
-• liczbę, która ma najwięcej różnych rozkładów na sumę dwóch liczb pierwszych, oraz
-liczbę takich rozkładów
-• liczbę, która ma najmniej różnych rozkładów na sumę dwóch liczb pierwszych, oraz liczbę
-takich rozkładów.
-Uwaga: przyjmujemy, że dwa rozkłady są różne, jeśli nie zawierają takiej samej pary
-składników. Przykładowo: rozkłady 22 = 19 + 3 i 22 = 3 + 19 są takie same.
-Dla pliku liczby_przyklad.txt odpowiedzią jest: 996 37 4 1
-(liczba 996 ma 37 rozkładów, a 4 tylko jeden)
-     */
-
-
-
-
-
-
-//BAAB
-    /*
-    Powiemy, że drużyna ma dobrą passę, jeśli wygrywa rozgrywki co najmniej 10 razy z rzędu.
-    Każda dobra passa rozpoczyna się albo na początku meczu, albo bezpośrednio po
-    przegranej rozgrywce. Każda dobra passa kończy się albo z końcem meczu, albo
-    bezpośrednio przed przegraną rozgrywką.
-    Podaj łączną liczbę dobrych pass, które miały obie drużyny w meczu. Wyznacz długość
-    najdłuższej dobrej passy i drużynę, która ją osiągnęła. Tylko jedna drużyna miała dobrą
-    passę o tej długości.
-    Przykład: w meczu BBBBBBBBBBAABBAAAAAAAAAAABA mamy łącznie 2 dobre passy.
-    Najdłuższą dobrą passę, o długości 11, osiągnęła drużyna A
-     */
 }
