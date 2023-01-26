@@ -6,6 +6,21 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 
 public abstract class Algorithms {
+
+    public static boolean isPrime(int n) {
+        boolean flag = true;
+        if(n == 1)
+            return false;
+
+        for(int i = 2; i < n; i++) {
+            if (n % i == 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
     public static ArrayList<Integer> sieveOfEratosthenes(int n) { //TODO replace copied code from the internet
         boolean[] prime = new boolean[n+1];
         for(int i=0;i<=n;i++)

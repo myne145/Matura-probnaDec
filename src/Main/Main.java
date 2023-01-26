@@ -8,8 +8,6 @@ import java.util.Collections;
 import static Main.Algorithms.*;
 
 public class Main {
-
-
     private static void zad1_1() throws Exception{
         String content = readFileString(new File("mecz.txt"));
         System.out.println(content.length());
@@ -82,7 +80,21 @@ public class Main {
             System.out.println(i);
     }
 
-
+    /*
+    Dla każdej liczby x z pliku liczby.txt sprawdź, czy liczba x – 1 jest liczbą pierwszą.
+    Podaj, ile liczb z pliku liczby.txt po pomniejszeniu o 1 daje liczbę pierwszą.
+    Dla pliku liczby_przyklad.txt odpowiedzią jest 94.
+     */
+    private static void zad3Part2() throws IOException {
+        ArrayList<Integer> arr = readFileArr(new File("liczby.txt"));
+        int counter = 0;
+        for(Integer i : arr) {
+            if (isPrime(i - 1)) {
+                counter++;
+            }
+        }
+        System.out.println("W pliku liczby.txt znajduje sie " + counter + " pierwszych liczb pomniejszonych o 1.");
+    }
 
     /*
     Hipoteza Goldbacha głosi, że każda liczba parzysta większa od 2 jest sumą dwóch liczb
@@ -129,15 +141,13 @@ public class Main {
                     //System.out.println("Counter NOT THE SAME for " + i + ": " + counter + ", Counter THE SAME: " + counterTheSame);
 
             }
-        } //TODO: liczba dla jakiej to jest
+        }
         int indexMax = notTheSameCounters.indexOf(Collections.max(notTheSameCounters));
         int indexMin = notTheSameCounters.indexOf(Collections.min(notTheSameCounters));
         System.out.println("Najwiecej rozkladow (nie te same, te same): " + numbers.get(indexMax) + ", " + Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + "najmniej rozkladow (nie te same, te same): "+ numbers.get(indexMin) + ", " + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
     }
 
-
-
     public static void main(String[] args) throws IOException {
-        zad3Part3();
+        zad3Part2();
     }
 }
