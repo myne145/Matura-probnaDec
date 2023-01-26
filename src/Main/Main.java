@@ -87,7 +87,7 @@ public class Main {
         ArrayList<Integer> arr = new ArrayList<>();
         for(int i = 2; i <= n; i++)
         {
-            if(prime[i] == true)
+            if(prime[i])
                 arr.add(i);
         }
         return arr;
