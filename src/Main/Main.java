@@ -197,6 +197,7 @@ public class Main {
             result.put(liczbyHex.charAt(i), result.get(liczbyHex.charAt(i)) + 1);
         }
         System.out.println(result.toString());
+        System.out.println(decimalToHex(736));
     }
 
     public static void main(String[] args) throws IOException {

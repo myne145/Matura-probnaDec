@@ -25,7 +25,7 @@ public abstract class Algorithms {
                 result.append(alphabet.get(counter - 10));
             } else if (counter > 0) {
                 result.append(counter);
-            }
+            } //TODO: FIX THE BUG WHEN IT REMOVES THE 0 EVEN IF ITS ON THE RIGHT SIDE AND ITS ACTUALLY NEEDED
         }
         return result.toString();
     }
