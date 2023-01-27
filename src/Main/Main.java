@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 import static Main.Algorithms.*;
 
@@ -147,7 +148,58 @@ public class Main {
         System.out.println("Najwiecej rozkladow (nie te same, te same): " + numbers.get(indexMax) + ", " + Collections.max(notTheSameCounters) + " " + Collections.max(theSameCounters) + "\n" + "najmniej rozkladow (nie te same, te same): "+ numbers.get(indexMin) + ", " + Collections.min(notTheSameCounters) + " " + Collections.min(theSameCounters));
     }
 
+    /*
+    Dla każdej liczby z pliku liczby.txt znajdź jej reprezentację w systemie szesnastkowym.
+    Dla każdej cyfry szesnastkowej podaj, ile razy występuje ona łącznie w zapisach
+    szesnastkowych wszystkich liczb z pliku liczby.txt.
+    Dla pliku liczby_przyklad.txt odpowiedzią jest
+    0:2
+    1:3
+    2:5
+    3:2
+    4:94
+    5:0
+    6:1
+    7:0
+    8:2
+    9:2
+    A:0
+    B:0
+    C:1
+    D:1
+    E:3
+    F:0
+     */
+    private static void zad3Part4() throws IOException {
+        ArrayList<Integer> liczby = readFileArr(new File("liczby_przyklad.txt"));
+        final LinkedHashMap<Character, Integer> result = new LinkedHashMap<Character, Integer>() {{
+            put('0', 0);
+            put('1', 0);
+            put('2', 0);
+            put('3', 0);
+            put('4', 0);
+            put('5', 0);
+            put('6', 0);
+            put('7', 0);
+            put('8', 0);
+            put('9', 0);
+            put('A', 0);
+            put('B', 0);
+            put('C', 0);
+            put('D', 0);
+            put('E', 0);
+            put('F', 0);
+        }};
+        StringBuilder liczbyHex = new StringBuilder();
+        for (Integer decimalNum : liczby)
+            liczbyHex.append(decimalToHex(decimalNum));
+        for(int i = 0; i < liczbyHex.length(); i++) {
+            result.put(liczbyHex.charAt(i), result.get(liczbyHex.charAt(i)) + 1);
+        }
+        System.out.println(result.toString());
+    }
+
     public static void main(String[] args) throws IOException {
-        zad3Part2();
+        zad3Part4();
     }
 }
