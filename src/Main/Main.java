@@ -171,7 +171,7 @@ public class Main {
     F:0
      */
     private static void zad3Part4() throws IOException {
-        ArrayList<Integer> liczby = readFileArr(new File("liczby_przyklad.txt"));
+        ArrayList<Integer> liczby = readFileArr(new File("liczby.txt"));
         final LinkedHashMap<Character, Integer> result = new LinkedHashMap<Character, Integer>() {{
             put('0', 0);
             put('1', 0);
