@@ -196,9 +196,11 @@ public class Main {
         for(int i = 0; i < liczbyHex.length(); i++) {
             result.put(liczbyHex.charAt(i), result.get(liczbyHex.charAt(i)) + 1);
         }
-        System.out.println(result.toString());
-        System.out.println(decimalToHex(736));
+        System.out.println(result);
+        appendFile(new File("wyniki3.txt"), "Odpowiedź do zadania 3.4: " + result.toString());
     }
+
+
 
     public static void main(String[] args) throws IOException {
         zad3Part4();

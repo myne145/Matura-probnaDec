@@ -1,12 +1,21 @@
 package Main;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class Algorithms {
+    public static void appendFile(File destination, String content) throws IOException {
+        if(!destination.exists())
+            destination.createNewFile();
+        String finalContent = readFileString(destination) + "\n" + content;
+        FileWriter writer = new FileWriter(destination);
+        writer.write(finalContent);
+        writer.close();
+    }
 
     public static String decimalToHex(int decimal) { //zasady z google'a ale sama funkcja jest moja
         final ArrayList<Character> alphabet = new ArrayList<>(Arrays.asList('A','B','C','D','E','F'));
