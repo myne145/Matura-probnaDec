@@ -90,6 +90,11 @@ public abstract class Algorithms {
         }
         return arr;
     }
+
+    public static ArrayList<String> readFileArrString(File f) throws IOException {
+        return new ArrayList<>(Files.readAllLines(f.toPath()));
+    }
+
     public static String readFileString(File f) throws IOException {
         StringBuilder bobTheBuilder = new StringBuilder();
         for(String s : Files.readAllLines(f.toPath())) {
@@ -97,5 +102,23 @@ public abstract class Algorithms {
             bobTheBuilder.append(s);
         }
         return bobTheBuilder.toString();
+    }
+
+    /**
+     *
+     * @param arr
+     * @return arraylist: index 0 is the highest number, and index 1 is index of highest number
+     */
+    public static ArrayList<Integer> getHighestNumAndItsIndexInArr(ArrayList<Integer> arr) {
+        int temp = 0;
+        int tempIndex = 0;
+        for(int i = 0; i < arr.size(); i++) {
+            if(arr.get(i) > temp) {
+                temp = arr.get(i);
+                tempIndex = i;
+            }
+        }
+
+        return new ArrayList<>(Arrays.asList(temp, tempIndex));
     }
 }

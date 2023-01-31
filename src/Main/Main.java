@@ -2,9 +2,7 @@ package Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 import static Main.Algorithms.*;
 
@@ -200,9 +198,34 @@ public class Main {
         appendFile(new File("wyniki3.txt"), "Odpowiedź do zadania 3.4: " + result.toString());
     }
 
-
+    private static void zad4Part1() throws IOException {
+        ArrayList<String> arr = readFileArrString(new File("ekodom.txt"));
+        LinkedHashMap<Date, Integer> data = new LinkedHashMap<>();
+        arr.remove(0);
+        for(String s : arr) {
+//            System.out.println(s.split("\t")[0] + " " + s.split("\t")[1]);
+            String[] date = s.split("\t")[0].split("\\.");
+            data.put(new Date(Integer.parseInt(date[2]) - 1900, Integer.parseInt(date[1]) - 1, Integer.parseInt(date[0])), Integer.valueOf(s.split("\t")[1]));
+        }
+        Set<Date> set = data.keySet();
+        ArrayList<Integer> counters = new ArrayList<>();
+        int counter = 1;
+        for(int i = 1; i < set.size(); i++) {
+//            System.out.println(date + " ------------- " + data.get(date));
+            if(data.get(set.toArray()[i-1]).equals(data.get(set.toArray()[i]))) {
+                counter++;
+                counters.add(counter);
+            } else{
+                counter = 1;
+                counters.add(1);
+            }
+//            System.out.println(set.toArray()[i-1] + " ----- " + counter);
+        }
+        ArrayList<Integer> result = getHighestNumAndItsIndexInArr(counters);
+        System.out.println("Najwiecej dni bez opadów to: " + result.get(0) + ", od dnia " + set.toArray()[result.get(1)] + " do dnia " + set.toArray()[result.get(1)]);
+    }
 
     public static void main(String[] args) throws IOException {
-        zad3Part4();
+        zad4Part1();
     }
 }
