@@ -223,6 +223,7 @@ public class Main {
         }
         ArrayList<Integer> result = getHighestNumAndItsIndexInArr(counters);
         System.out.println("Najwiecej dni bez opadów to: " + result.get(0) + ", od dnia " + set.toArray()[result.get(1)] + " do dnia " + set.toArray()[result.get(1)]);
+        //Problem był z podpunktem b, gdzie trzeba było sprawdzić ile razy podlano ogródek od 1.04 do 30.09, nie zgadzały się liczby i nie miało to sensu
     }
 
     public static void main(String[] args) throws IOException {
