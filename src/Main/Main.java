@@ -225,7 +225,45 @@ public class Main {
         System.out.println("Najwiecej dni bez opadów to: " + result.get(0) + ", od dnia " + set.toArray()[result.get(1)] + " do dnia " + set.toArray()[result.get(1)]);
     }
 
+
+    private static void zad4Part3() throws IOException {
+        ArrayList<String> arr = readFileArrString(new File("ekodom.txt"));
+        LinkedHashMap<Date, Integer> data = new LinkedHashMap<>();
+        arr.remove(0);
+        for (String s : arr) {
+//            System.out.println(s.split("\t")[0] + " " + s.split("\t")[1]);
+            String[] date = s.split("\t")[0].split("\\.");
+            data.put(new Date(Integer.parseInt(date[2]) - 1900, Integer.parseInt(date[1]) - 1, Integer.parseInt(date[0])), Integer.valueOf(s.split("\t")[1]));
+        }
+        ArrayList<Integer> waterAmount = new ArrayList<>();
+        waterAmount.add(5000);
+        Set<Date> keySet = data.keySet();
+        List<Date> keys = new ArrayList<>(keySet);
+        int counter = 0;
+        for(int i = 0; i < keys.size(); i++) {
+
+            if(keys.get(i).getDay() != 3) {
+                if(waterAmount.get(i) - 190 + data.get(keys.get(i)) <= 0) {
+                    counter++;
+                    waterAmount.add(0);
+                }
+                else
+                    waterAmount.add(waterAmount.get(i) - 190 + data.get(keys.get(i)));
+            }
+            else
+            if(waterAmount.get(i) - 260 + data.get(keys.get(i)) <= 0) {
+                counter++;
+                waterAmount.add(0);
+
+            }
+            else
+                waterAmount.add(waterAmount.get(i) - 260 + data.get(keys.get(i)));
+        }
+        System.out.println(waterAmount);
+        System.out.println(counter);
+    }
+
     public static void main(String[] args) throws IOException {
-        zad4Part1();
+        zad4Part3();
     }
 }
