@@ -3,6 +3,7 @@ package Main;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static Main.Algorithms.*;
 
@@ -227,7 +228,7 @@ public class Main {
     }
 
 
-    private static void zad4Part3() throws IOException {
+    private static void zad4Part3A() throws IOException {
         ArrayList<String> arr = readFileArrString(new File("ekodom.txt"));
         LinkedHashMap<Date, Integer> data = new LinkedHashMap<>();
         arr.remove(0);
@@ -282,7 +283,77 @@ public class Main {
         System.out.println(counter);
     }
 
+    private static void zad4Part3B() throws IOException {
+        ArrayList<String> arr = readFileArrString(new File("ekodom.txt"));
+        LinkedHashMap<Date, Integer> data = new LinkedHashMap<>();
+        arr.remove(0);
+        for (String s : arr) {
+            String[] date = s.split("\t")[0].split("\\.");
+            data.put(new Date(Integer.parseInt(date[2]) - 1900, Integer.parseInt(date[1]) - 1, Integer.parseInt(date[0])), Integer.valueOf(s.split("\t")[1]));
+        }
+        ArrayList<Integer> waterAmount = new ArrayList<>();
+        waterAmount.add(5000);
+        Set<Date> keySet = data.keySet();
+        List<Date> keys = new ArrayList<>(keySet);
+        int counter = 0;
+        int dayCounter = 1;
+        for(int i = 0; i < keys.size(); i++) {
+            if(keys.get(i).getDay() != 3) {
+                if(waterAmount.get(i) - 190 + data.get(keys.get(i)) <= 0) {
+                    counter++;
+                    waterAmount.add(0);
+                }
+                else {
+                    waterAmount.add(waterAmount.get(i) - 190 + data.get(keys.get(i)));
+                }
+            } else {
+                if (waterAmount.get(i) - 260 + data.get(keys.get(i)) <= 0) {
+                    counter++;
+                    waterAmount.add(0);
+
+                } else {
+                    waterAmount.add(waterAmount.get(i) - 260 + data.get(keys.get(i)));
+                }
+            }
+
+            if(keys.get(i).getMonth() >= 3 && keys.get(i).getMonth() <= 8) {
+                Date date = keys.get(i);
+                if(data.get(date) == 0) {
+                    dayCounter++;
+                } else {
+                    if(dayCounter >= 5) {
+                        int howManyTimesWatering = dayCounter / 5;
+                        if(waterAmount.get(i) - (howManyTimesWatering * 300) <= 0) {
+                            waterAmount.set(i, 0);
+                            counter++;
+                        } else
+                            waterAmount.set(i, waterAmount.get(i) - (howManyTimesWatering * 300));
+                    }
+                    dayCounter = 1;
+                }
+            }
+        }
+        System.out.println(waterAmount);
+        int waterFamily = 0;
+        for(int i = 1; i < waterAmount.size(); i++) {
+            if(waterAmount.get(i-1) <= waterAmount.get(i))
+                waterFamily += 0;
+            else
+                waterFamily += (waterAmount.get(i-1) - waterAmount.get(i));
+        }
+        int waterTotal = 0;
+        for(Date date : keys) {
+            if(date.getDay() == 3)
+                waterTotal += 260;
+            else
+                waterTotal += 190;
+        }
+        System.out.println(waterTotal + " " + waterFamily);
+        System.out.println(waterTotal - waterFamily);
+
+    }
+
     public static void main(String[] args) throws IOException {
-        zad4Part3();
+        zad4Part3B();
     }
 }
