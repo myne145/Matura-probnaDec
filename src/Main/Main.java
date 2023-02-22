@@ -241,24 +241,42 @@ public class Main {
         Set<Date> keySet = data.keySet();
         List<Date> keys = new ArrayList<>(keySet);
         int counter = 0;
+        int dayCounter = 1;
         for(int i = 0; i < keys.size(); i++) {
-
             if(keys.get(i).getDay() != 3) {
                 if(waterAmount.get(i) - 190 + data.get(keys.get(i)) <= 0) {
                     counter++;
                     waterAmount.add(0);
                 }
-                else
+                else {
                     waterAmount.add(waterAmount.get(i) - 190 + data.get(keys.get(i)));
-            }
-            else
-            if(waterAmount.get(i) - 260 + data.get(keys.get(i)) <= 0) {
-                counter++;
-                waterAmount.add(0);
+                }
+            } else {
+                if (waterAmount.get(i) - 260 + data.get(keys.get(i)) <= 0) {
+                    counter++;
+                    waterAmount.add(0);
 
+                } else {
+                    waterAmount.add(waterAmount.get(i) - 260 + data.get(keys.get(i)));
+                }
             }
-            else
-                waterAmount.add(waterAmount.get(i) - 260 + data.get(keys.get(i)));
+
+            if(keys.get(i).getMonth() >= 3 && keys.get(i).getMonth() <= 8) {
+                Date date = keys.get(i);
+                if(data.get(date) == 0) {
+                    dayCounter++;
+                } else {
+                    if(dayCounter >= 5) {
+                        int howManyTimesWatering = dayCounter / 5;
+                        if(waterAmount.get(i) - (howManyTimesWatering * 300) <= 0) {
+                            waterAmount.set(i, 0);
+                            counter++;
+                        } else
+                            waterAmount.set(i, waterAmount.get(i) - (howManyTimesWatering * 300));
+                    }
+                    dayCounter = 1;
+                }
+            }
         }
         System.out.println(waterAmount);
         System.out.println(counter);
