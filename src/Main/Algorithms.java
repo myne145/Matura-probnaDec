@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Algorithms {
     public static void appendFile(File destination, String content) throws IOException {
@@ -120,5 +121,18 @@ public abstract class Algorithms {
         }
 
         return new ArrayList<>(Arrays.asList(temp, tempIndex));
+    }
+
+    public static ArrayList<Long> getHighestNumAndItsIndexInArrLong(List<Long> arr) {
+        long temp = 0L;
+        int tempIndex = 0;
+        for(int i = 0; i < arr.size(); i++) {
+            if(arr.get(i) > temp) {
+                temp = arr.get(i);
+                tempIndex = i;
+            }
+        }
+
+        return new ArrayList(Arrays.asList(temp, tempIndex));
     }
 }

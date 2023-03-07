@@ -353,7 +353,29 @@ public class Main {
 
     }
 
+    private static void zad5Part1() throws IOException {
+        ArrayList<String> arr = readFileArrString(new File("klienci.txt"));
+        ArrayList<String> arr2 = readFileArrString(new File("noclegi.txt"));
+        arr.remove(0);
+        arr2.remove(0);
+        LinkedHashMap<String, Integer> data = new LinkedHashMap<>();
+        ArrayList<Stay> noclegi = new ArrayList<>();
+        for(String s : arr2) {
+            noclegi.add(new Stay(s));
+        }
+        for(Stay stay : noclegi) {
+            long time = (stay.getLeaveDate().getTime() / 1000L) - (stay.getArrivalDate().getTime() / 1000L);
+            data.put(stay.getNrDowodu(), (int) time);
+        }
+
+        List<Integer> valuesList = new ArrayList<>(data.values());
+        int highestIndex = getHighestNumAndItsIndexInArr(new ArrayList<>(valuesList)).get(1);
+        System.out.println(data.keySet().toArray()[highestIndex]);
+
+
+    }
+
     public static void main(String[] args) throws IOException {
-        zad4Part3B();
+        zad5Part1();
     }
 }
