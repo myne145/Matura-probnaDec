@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public abstract class Algorithms {
     public static void appendFile(File destination, String content) throws IOException {
@@ -17,6 +15,8 @@ public abstract class Algorithms {
         writer.write(finalContent);
         writer.close();
     }
+
+
 
     public static String decimalToHex(int decimal) { //zasady z google'a ale sama funkcja jest moja
         final ArrayList<Character> alphabet = new ArrayList<>(Arrays.asList('A','B','C','D','E','F'));
